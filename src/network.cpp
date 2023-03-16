@@ -345,13 +345,6 @@ void setupWebServer(BmsRelay *bmsRelay) {
           return;
         }
 
-        // Set if BMS status
-        // validate choice
-        if (bmsDrop == nullptr) {
-          request->send(400, "text/html", "Invalid BMS Drop option.");
-          return;
-        }
-
         Settings->wifi_power = wifiPower->value().toInt();
         snprintf(Settings->ap_self_password, sizeof(Settings->ap_self_password),
                  "%s", apSelfPassword->value().c_str());
