@@ -68,7 +68,6 @@ void bms_setup() {
     saveSettings();
   });
   
-  // TODO This should be moved upstream.
   relay->setBMSSerialOverride(0xFFABCDEF);
 
   if (Settings->bms_drop != 0) {
