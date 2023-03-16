@@ -21,7 +21,7 @@ AsyncWebSocket ws("/rawdata");
 const String defaultPass("****");
 BmsRelay *relay;
 
-const String owie_version = "1.4.3";
+const String owie_version = "1.4.4";
 
 String renderPacketStatsTable() {
   String result(
@@ -163,6 +163,8 @@ String templateProcessor(const String &var) {
     return lockingPreconditionsMet() ? "1" : "";
   } else if (var == "LOCKING_ENABLED") {
     return Settings->locking_enabled ? "1" : "";
+  } else if (var == "DROP_ENABLED") {
+    return Settings->bms_drop ? "1" : "";
   } else if (var == "PACKET_STATS_TABLE") {
     return renderPacketStatsTable();
   } else if (var == "CELL_VOLTAGE_TABLE") {
@@ -312,6 +314,7 @@ void setupWebServer(BmsRelay *bmsRelay) {
         const auto apSelfPassword = request->getParam("pw", true);
         const auto apSelfName = request->getParam("apselfname", true);
         const auto wifiPower = request->getParam("wifipower", true);
+        const auto bmsDrop = request->getParam("bmsdrop", true);
         if (apSelfPassword == nullptr ||
             apSelfPassword->value().length() >
                 sizeof(Settings->ap_self_password) ||
@@ -341,6 +344,14 @@ void setupWebServer(BmsRelay *bmsRelay) {
               "Wifi Power range MUST be between 8 (dBm) and 17 (dBm).");
           return;
         }
+
+        // Set if BMS status
+        // validate choice
+        if (bmsDrop == nullptr) {
+          request->send(400, "text/html", "Invalid BMS Drop option.");
+          return;
+        }
+
         Settings->wifi_power = wifiPower->value().toInt();
         snprintf(Settings->ap_self_password, sizeof(Settings->ap_self_password),
                  "%s", apSelfPassword->value().c_str());

@@ -156,7 +156,12 @@ void BmsRelay::bmsStatusParser(Packet& p) {
     return;
   }
   last_status_byte_ = p.data()[0];
-
+  // Forward all status packets for cases of ReWheel "Rescale State of Charge"
+  // patch or stock batteries. With the intent of getting used Ah count back.
+  if (drop_status_ == false) {
+    p.setShouldForward(true);
+    return;
+  }
   // Forwarding the status packet during normal operation seems to drive
   // an event loop in the controller that tallies used Ah and eventually
   // makes the board throw Error 23. Swallowing the packet does the trick.

@@ -35,6 +35,13 @@
         </button>
       </fieldset>
       <fieldset>
+        <legend>Drop BMS Status Messages:</legend>
+        <p id="dropMsg"></p>
+        <button onclick="toggleDrop(this)" id="dropBtn" style="display:none" data-enabled="%DROP_ENABLED%">
+          Enabled
+        </button>
+      </fieldset>
+      <fieldset>
         <legend>Firmware Update:</legend>
         <input id="updInput" type="file" name="firmware" accept=".bin,.bin.gz">
       </fieldset>

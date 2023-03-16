@@ -6,7 +6,7 @@ message SettingsMsg {
   string ap_name = 2;
   string ap_password = 3;
   int32 graceful_shutdown_count = 4;
-  reserved 5; // used to be BMS serial override
+  bool bms_drop = 5; // used to be BMS serial override
   string ap_self_password = 6;
   string ap_self_name = 7;
   int32 wifi_power = 8;

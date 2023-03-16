@@ -67,8 +67,13 @@ void bms_setup() {
     Settings->graceful_shutdown_count++;
     saveSettings();
   });
-
+  
+  // TODO This should be moved upstream.
   relay->setBMSSerialOverride(0xFFABCDEF);
+
+  if (Settings->bms_drop != 0) {
+    relay->dropBMSStatus(Settings->bms_drop);
+  }
 
   setupWifi();
   setupWebServer(relay);
