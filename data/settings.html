@@ -123,7 +123,7 @@
         function updateButton() {
           const isEnabled = !!btn.dataset.enabled;
           btn.removeAttribute("enabled");
-          lockingMsg.innerText = isEnabled ? lockingEnabledMsg : lockingDisabledMsg;
+          dropMsg.innerText = isEnabled ? dropEnabledMsg : dropDisabledMsg;
           btn.innerText = isEnabled ? "Disable dropping" : "Enable dropping";
         }
         updateButton();
