@@ -383,6 +383,15 @@ void setupWebServer(BmsRelay *bmsRelay) {
     }
     request->send(404);
   });
+  webServer.on("/drop", HTTP_GET, [](AsyncWebServerRequest *request) {
+    if (request->hasParam("toggleDrop")) {
+      Settings->drop_enabled = !Settings->drop_enabled;
+      saveSettings();
+      request->send(200, "text/html", Settings->drop_enabled ? "1" : "");
+      return;
+    }
+    request->send(404);
+  });
 
   webServer.begin();
 }

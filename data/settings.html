@@ -35,9 +35,9 @@
         </button>
       </fieldset>
       <fieldset>
-        <legend>Drop BMS Status Messages:</legend>
+        <legend>Drop BMS Status:</legend>
         <p id="dropMsg"></p>
-        <button onclick="toggleDrop(this)" id="dropBtn" style="display:none" data-enabled="%DROP_ENABLED%">
+        <button onclick="toggleDrop(this)" id="dropBtn" data-enabled="%DROP_ENABLED%">
           Enabled
         </button>
       </fieldset>
@@ -103,6 +103,48 @@
         }
       })();
   //# sourceURL=settings.js
+    </script>
+    <script>
+      (() => {
+        document.getElementById("updInput").onchange = () => {
+          const form = document.getElementById("settingsForm");
+          form.setAttribute("enctype", "multipart/form-data");
+          const oldAction = form.getAttribute("action");
+          form.setAttribute("action", "/update");
+          form.submit();
+          form.setAttribute("action", oldAction);
+        };
+
+        const dropEnabledMsg = "BMS Status dropping is enabled. This is the default, you can disable it in the case of a stock battery or rescaling Ah via ReWheel.";
+        const dropDisabledMsg = "BMS Status dropping is disabled."
+        const btn = document.getElementById("dropBtn");
+        const lockingMsg = document.getElementById("dropMsg");
+
+        function updateButton() {
+          const isEnabled = !!btn.dataset.enabled;
+          btn.removeAttribute("enabled");
+          lockingMsg.innerText = isEnabled ? lockingEnabledMsg : lockingDisabledMsg;
+          btn.innerText = isEnabled ? "Disable dropping" : "Enable dropping";
+        }
+        updateButton();
+
+        btn.onclick = () => {
+          const xhr = new XMLHttpRequest();
+          xhr.open("GET", "/drop?toggleDrop");
+          xhr.resposeType = "text";
+
+          xhr.onload = () => {
+            if (xhr.readyState !== xhr.DONE || xhr.status !== 200) {
+              btn.innerText = "Error: " + xhr.status;
+            } else {
+              btn.dataset.enabled = xhr.responseText;
+              updateButton();
+            }
+          };
+          btn.setAttribute("enabled", "1");
+          xhr.send();
+        }
+      })();
     </script>
   </div>
 </body>
