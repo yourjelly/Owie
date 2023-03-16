@@ -70,8 +70,8 @@ void bms_setup() {
   
   relay->setBMSSerialOverride(0xFFABCDEF);
 
-  if (Settings->bms_drop != 0) {
-    relay->dropBMSStatus(Settings->bms_drop);
+  if (Settings->drop_enabled != 0) {
+    relay->dropBMSStatus(Settings->drop_enabled);
   }
 
   setupWifi();

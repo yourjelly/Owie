@@ -164,7 +164,7 @@ String templateProcessor(const String &var) {
   } else if (var == "LOCKING_ENABLED") {
     return Settings->locking_enabled ? "1" : "";
   } else if (var == "DROP_ENABLED") {
-    return Settings->bms_drop ? "1" : "";
+    return Settings->drop_enabled ? "1" : "";
   } else if (var == "PACKET_STATS_TABLE") {
     return renderPacketStatsTable();
   } else if (var == "CELL_VOLTAGE_TABLE") {
