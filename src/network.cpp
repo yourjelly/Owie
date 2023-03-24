@@ -314,7 +314,6 @@ void setupWebServer(BmsRelay *bmsRelay) {
         const auto apSelfPassword = request->getParam("pw", true);
         const auto apSelfName = request->getParam("apselfname", true);
         const auto wifiPower = request->getParam("wifipower", true);
-        const auto bmsDrop = request->getParam("bmsdrop", true);
         if (apSelfPassword == nullptr ||
             apSelfPassword->value().length() >
                 sizeof(Settings->ap_self_password) ||
