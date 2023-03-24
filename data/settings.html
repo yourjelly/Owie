@@ -115,8 +115,8 @@
           form.setAttribute("action", oldAction);
         };
 
-        const dropEnabledMsg = "BMS Status dropping is enabled. This is the default, you can disable it in the case of a stock battery or rescaling Ah via ReWheel.";
-        const dropDisabledMsg = "BMS Status dropping is disabled."
+        const dropEnabledMsg = 'BMS Status dropping is enabled (Default).\nReWheel "Rescale State of Charge" patch needed to disable.';
+        const dropDisabledMsg = 'BMS Status dropping is disabled.\nBe sure you have "Rescale State of Charge" patch enabled.';
         const btn = document.getElementById("dropBtn");
         const lockingMsg = document.getElementById("dropMsg");
 

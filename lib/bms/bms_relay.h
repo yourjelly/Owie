@@ -113,6 +113,7 @@ class BmsRelay {
     return current_times_milliseconds_regenerated_ * CURRENT_SCALER / 3600;
   }
 
+  bool isCurrent() {return last_status_byte_ & 0x5; }
   bool isCharging() { return last_status_byte_ & 0x20; }
   bool isBatteryEmpty() { return last_status_byte_ & 0x4; }
   bool isBatteryTempOutOfRange() {
