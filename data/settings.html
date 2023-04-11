@@ -35,10 +35,10 @@
         </button>
       </fieldset>
       <fieldset>
-        <legend>Drop BMS Status:</legend>
-        <p id="dropMsg"></p>
-        <button onclick="toggleDrop(this)" id="dropBtn" data-enabled="%DROP_ENABLED%">
-          Enabled
+        <legend>BMS Passthrough Status:</legend>
+        <p id="passthroughMsg"></p>
+        <button onclick="togglePassthrough(this)" id="passthroughBtn" data-enabled="%PASSTHROUGH_ENABLED%">
+          Disabled
         </button>
       </fieldset>
       <fieldset>
@@ -115,22 +115,22 @@
           form.setAttribute("action", oldAction);
         };
 
-        const dropEnabledMsg = 'BMS Status dropping is enabled (Default).\nReWheel "Rescale State of Charge" patch needed to disable.';
-        const dropDisabledMsg = 'BMS Status dropping is disabled.\nBe sure you have "Rescale State of Charge" patch enabled.';
-        const btn = document.getElementById("dropBtn");
-        const lockingMsg = document.getElementById("dropMsg");
+        const passthroughEnabledMsg = 'BMS Passthrough enabled.';
+        const passthroughDisabledMsg = 'BMS Passthrough disabled (Default).';
+        const btn = document.getElementById("passthroughBtn");
+        const passthroughMsg = document.getElementById("passthroughMsg");
 
         function updateButton() {
           const isEnabled = !!btn.dataset.enabled;
-          btn.removeAttribute("enabled");
-          dropMsg.innerText = isEnabled ? dropEnabledMsg : dropDisabledMsg;
-          btn.innerText = isEnabled ? "Disable dropping" : "Enable dropping";
+          btn.removeAttribute("disabled");
+          passthroughMsg.innerText = isEnabled ? passthroughEnabledMsg : passthroughDisabledMsg;
+          btn.innerText = isEnabled ? "Disable Passthrough" : "Enable Passthrough";
         }
         updateButton();
 
         btn.onclick = () => {
           const xhr = new XMLHttpRequest();
-          xhr.open("GET", "/drop?toggleDrop");
+          xhr.open("GET", "/passthrough?togglePassthrough");
           xhr.resposeType = "text";
 
           xhr.onload = () => {
@@ -141,7 +141,7 @@
               updateButton();
             }
           };
-          btn.setAttribute("enabled", "1");
+          btn.setAttribute("disabled", "1");
           xhr.send();
         }
       })();

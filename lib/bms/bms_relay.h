@@ -72,9 +72,9 @@ class BmsRelay {
   uint32_t getCapturedBMSSerial() { return captured_serial_; }
 
   /**
-   * @brief Toggle to drop BMS status or not.
+   * @brief Toggle to passthrough BMS status or not.
    */
-  void dropBMSStatus(bool drop) { drop_status_ = drop; }
+  void passthroughBMSStatus(bool passthrough) { passthrough_status_ = passthrough; }
 
   /**
    * @brief Battery percentage as reported by the BMS.
@@ -141,7 +141,7 @@ class BmsRelay {
   std::vector<uint8_t> sourceBuffer_;
   uint32_t serial_override_ = 0;
   uint32_t captured_serial_ = 0;
-  bool drop_status_ = true;
+  bool passthrough_status_ = false;
   int16_t current_ = 0;
 
   int8_t bms_soc_percent_ = -1;

@@ -163,8 +163,8 @@ String templateProcessor(const String &var) {
     return lockingPreconditionsMet() ? "1" : "";
   } else if (var == "LOCKING_ENABLED") {
     return Settings->locking_enabled ? "1" : "";
-  } else if (var == "DROP_ENABLED") {
-    return Settings->drop_enabled ? "1" : "";
+  } else if (var == "PASSTHROUGH_ENABLED") {
+    return Settings->passthrough_enabled ? "1" : "";
   } else if (var == "PACKET_STATS_TABLE") {
     return renderPacketStatsTable();
   } else if (var == "CELL_VOLTAGE_TABLE") {
@@ -375,11 +375,11 @@ void setupWebServer(BmsRelay *bmsRelay) {
     }
     request->send(404);
   });
-  webServer.on("/drop", HTTP_GET, [](AsyncWebServerRequest *request) {
-    if (request->hasParam("toggleDrop")) {
-      Settings->drop_enabled = !Settings->drop_enabled;
+  webServer.on("/passthrough", HTTP_GET, [](AsyncWebServerRequest *request) {
+    if (request->hasParam("togglePassthrough")) {
+      Settings->passthrough_enabled = !Settings->passthrough_enabled;
       saveSettings();
-      request->send(200, "text/html", Settings->drop_enabled ? "1" : "");
+      request->send(200, "text/html", Settings->passthrough_enabled ? "1" : "");
       return;
     }
     request->send(404);
